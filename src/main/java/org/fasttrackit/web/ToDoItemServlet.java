@@ -1,7 +1,6 @@
 package org.fasttrackit.web;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.sun.net.httpserver.HttpServer;
 import org.fasttrackit.service.ToDoItemService;
 import org.fasttrackit.transfer.SaveToDoItemRequest;
 
@@ -31,4 +30,5 @@ public class ToDoItemServlet extends HttpServlet {
             resp.sendError(500, "There is an error: " + e.getMessage()); // 500 is Http service codes
         }
     }
+
 }

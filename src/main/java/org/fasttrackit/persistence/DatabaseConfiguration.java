@@ -2,6 +2,7 @@ package org.fasttrackit.persistence;
 
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -13,11 +14,11 @@ public class DatabaseConfiguration {
         Properties properties = new Properties();
 
         // try-with-resources
-        try(FileInputStream inputStream = new FileInputStream("src/main/resources/db.properties")) {
-            // this type of try statment
+        try(InputStream inputStream = DatabaseConfiguration.class.getClassLoader().getResourceAsStream("db.properties")) {
+            // this type of try statement
             properties.load(inputStream);
 
-            // laod the Driver Class
+            // load the Driver Class
             Class.forName(properties.getProperty("DB_DRIVER_CLASS"));
 
             return DriverManager.getConnection(properties.getProperty("DB_URL"),
