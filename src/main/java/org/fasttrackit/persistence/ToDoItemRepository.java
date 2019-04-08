@@ -21,7 +21,7 @@ public class ToDoItemRepository {
             preparedStatement.setBoolean(3, request.isDone());
             preparedStatement.setDate(4, request.getDeadLine());
 
-            preparedStatement.executeUpdate();
+            preparedStatement.executeUpdate();  // executeUpdate because we're creating items and we're asking it to update the list
 
         }
     }
@@ -30,7 +30,7 @@ public class ToDoItemRepository {
             PreparedStatement preparedStatement = connection.prepareStatement(
                     "SELECT id, description, started, done, deadline FROM to_do_items");
 
-            ResultSet resultSet = preparedStatement.executeQuery();
+            ResultSet resultSet = preparedStatement.executeQuery(); // executeQuery because we're not doing anything to list, we're just asking to view it to us
 
             List<ToDoItem> response = new ArrayList<>();
             while (resultSet.next()){
