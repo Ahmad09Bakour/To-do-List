@@ -3,6 +3,7 @@ package org.fasttrackit.web;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.fasttrackit.domain.ToDoItem;
 import org.fasttrackit.service.ToDoItemService;
+import org.fasttrackit.transfer.MarkItemDoneRequest;
 import org.fasttrackit.transfer.SaveToDoItemRequest;
 
 import javax.servlet.ServletException;
@@ -34,6 +35,42 @@ public class ToDoItemServlet extends HttpServlet {
             e.printStackTrace();
             resp.sendError(500, "There is an error: " + e.getMessage()); // 500 is Http service codes
         }
+    }
+
+    @Override
+    protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        setAccessControlHeaders(resp);
+
+        String id = req.getParameter("id");
+        ObjectMapper objectMapper = new ObjectMapper();
+        MarkItemDoneRequest request = objectMapper.readValue(req.getReader(), MarkItemDoneRequest.class);
+
+        try
+        {
+            toDoItemService.markToDoItemDone(Long.valueOf(id), request);
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+            resp.sendError(500, "There is an error: " + e.getMessage()); // 500 is Http service codes
+        }
+
+    }
+
+    @Override
+    protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        setAccessControlHeaders(resp);
+
+        String id = req.getParameter("id");
+
+        try
+        {
+            toDoItemService.deleteToDoItem(Long.valueOf(id));
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+            resp.sendError(500, "There is an error: " + e.getMessage()); // 500 is Http service codes
+        }
+
     }
 
     @Override
